@@ -8,34 +8,26 @@ export default async function handler(req, res) {
     return;
   }
 
-  let body = '';
-  await new Promise((resolve) => {
-    req.on('data', chunk => body += chunk);
-    req.on('end', resolve);
-  });
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify(req.body)
+    });
 
-  if (!body || body.trim() === '') {
-  res.status(400).json({ error: 'Empty request body' });
-  return;
-}
- const parsed = JSON.parse(body);
-
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': process.env.ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01'
-    },
-    body: JSON.stringify(parsed)
-  });
-
-  const data = await response.json();
-  res.status(response.status).json(data);
+    const data = await response.json();
+    res.status(response.status).json(data);
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
 }
 
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: true,
   },
 };
