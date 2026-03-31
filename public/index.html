@@ -526,7 +526,7 @@ End with a single closing sentence. Honest. Not motivational. True.
 Write with precision and warmth. No clinical distance. No generic wellness copy.`;
 
   try {
-    const res = await fetch('/api/chat', {
+    const res = await fetch('/api/chat', 
       method: 'POST',
       headers: { 'Content-Type': 'application/json',
         model: 'claude-opus-4-6',
