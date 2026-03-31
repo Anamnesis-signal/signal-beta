@@ -525,11 +525,12 @@ End with a single closing sentence. Honest. Not motivational. True.
 
 Write with precision and warmth. No clinical distance. No generic wellness copy.`;
 
-  try {
-    const res = await fetch('/api/chat', 
+    try {
+    const res = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json',
-        model: 'claude-opus-4-6',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 1000,
         system: sys,
         messages: [{ role: 'user', content: `Intake:\n\n${summary}` }]
@@ -541,6 +542,7 @@ Write with precision and warmth. No clinical distance. No generic wellness copy.
   } catch(e) {
     renderResult('', 'Signal encountered an error. Please try again.');
   }
+
 }
 
 function renderResult(text, err) {
