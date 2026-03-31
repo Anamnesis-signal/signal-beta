@@ -14,7 +14,11 @@ export default async function handler(req, res) {
     req.on('end', resolve);
   });
 
-  const parsed = JSON.parse(body);
+  if (!body || body.trim() === '') {
+  res.status(400).json({ error: 'Empty request body' });
+  return;
+}
+ const parsed = JSON.parse(body);
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
