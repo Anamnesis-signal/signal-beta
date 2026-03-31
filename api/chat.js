@@ -8,6 +8,14 @@ export default async function handler(req, res) {
     return;
   }
 
+  console.log('req.body:', JSON.stringify(req.body));
+  console.log('type:', typeof req.body);
+
+  if (!req.body) {
+    res.status(400).json({ error: 'No body', type: typeof req.body });
+    return;
+  }
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
