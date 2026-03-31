@@ -524,14 +524,14 @@ One core intervention or shift that would produce the most downstream change for
 End with a single closing sentence. Honest. Not motivational. True.
 
 Write with precision and warmth. No clinical distance. No generic wellness copy.`;
-    const payload = {
-  model: 'claude-haiku-4-5-20251001',
-  max_tokens: 1000,
-  system: sys,
-  messages: [{ role: 'user', content: 'Intake:\n\n' + summary }]
-};
+   const payload = {
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1000,
+    system: sys,
+    messages: [{ role: 'user', content: 'Intake:\n\n' + summary }]
+  };
 
-    try {
+  try {
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -542,14 +542,8 @@ Write with precision and warmth. No clinical distance. No generic wellness copy.
     renderResult(text);
   } catch(e) {
     renderResult('', 'Signal encountered an error. Please try again.');
-  };
-    const data = await res.json();
-    const text = data.content?.map(b => b.text || '').join('') || '';
-    renderResult(text);
-  } catch(e) {
-    renderResult('', 'Signal encountered an error. Please try again.');
   }
-
+}
 
 
 function renderResult(text, err) {
