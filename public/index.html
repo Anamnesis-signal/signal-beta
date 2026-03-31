@@ -526,7 +526,7 @@ End with a single closing sentence. Honest. Not motivational. True.
 Write with precision and warmth. No clinical distance. No generic wellness copy.`;
 
   try {
-    const res = await fetch('http://localhost:8081/https://api.anthropic.com/v1/messages', {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-api-key': 'YOUR_API_KEY_HERE', 'anthropic-version': '2023-06-01' },
       body: JSON.stringify({
